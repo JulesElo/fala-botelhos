@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0e0e10">
+<title>Fala, Botelhos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f97316'/%3E%3Cpath d='M10 8.5h12a3.5 3.5 0 0 1 3.5 3.5v6.5a3.5 3.5 0 0 1-3.5 3.5h-6.5l-5 4v-4H10a3.5 3.5 0 0 1-3.5-3.5V12A3.5 3.5 0 0 1 10 8.5z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <div class="wrap head">
+    <a class="brand" href="#mapa">
+      <span class="logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24"><path d="M6.5 4.5h11A3 3 0 0 1 20.5 7.5v6a3 3 0 0 1-3 3h-6l-4.5 3.5v-3.5h-.5a3 3 0 0 1-3-3v-6a3 3 0 0 1 3-3z" fill="#fff"/></svg>
+      </span>
+      <b>Fala, Botelhos</b>
+    </a>
+    <nav>
+      <a href="#mapa" data-v="mapa">Mapa<span class="long"> de pedidos</span></a>
+      <a href="#reportar" data-v="reportar">Reportar</a>
+      <a href="#decidir" data-v="decidir">Decidir</a>
+      <a href="#transparencia" data-v="transparencia">Transparência</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- MAPA DE PEDIDOS -->
+  <section class="view" id="v-mapa">
+    <h1>Mapa de pedidos</h1>
+    <p class="sub">Problemas relatados pelos moradores, pelo aplicativo e nos encontros presenciais.</p>
+    <div class="map-layout">
+      <div class="card map-card">
+        <div class="map-head">
+          <span class="legend" id="legend"></span>
+        </div>
+        <div id="map-main"></div>
+      </div>
+      <div>
+        <div class="filters" id="f-status"></div>
+        <div class="list-head">
+          <span class="muted" id="count"></span>
+          <select id="f-bairro" aria-label="Filtrar por bairro"></select>
+        </div>
+        <div class="list" id="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REPORTAR -->
+  <section class="view" id="v-reportar">
+    <h1>Reportar um problema</h1>
+    <p class="sub">Leva menos de um minuto. Você acompanha cada etapa e é avisado quando o problema for resolvido.</p>
+    <div id="rep-form-wrap">
+      <form class="form-layout" id="rep-form" novalidate>
+        <div class="card pad">
+          <div class="field">
+            <label class="l">Qual é o problema?</label>
+            <div class="types" id="types"></div>
+          </div>
+          <div class="field">
+            <label class="l" for="r-desc">Descrição <span class="muted">(opcional)</span></label>
+            <textarea id="r-desc" placeholder="Ex.: buraco grande no meio da pista, carros desviando pela contramão."></textarea>
+          </div>
+          <div class="field">
+            <label class="l">Foto</label>
+            <label class="upload">
+              <input type="file" accept="image/*" id="r-foto" hidden>
+              <span id="upload-txt">Toque para tirar ou escolher uma foto</span>
+            </label>
+          </div>
+          <label class="check"><input type="checkbox" id="r-copasa"><span>Apareceu depois de uma obra da COPASA<br><span class="muted">O pedido fica marcado como responsabilidade dela.</span></span></label>
+        </div>
+        <div class="card pad">
+          <div class="field">
+            <label class="l">Onde fica?</label>
+            <div id="map-pick" class="pick-wrap"></div>
+            <div class="hint">Toque no mapa para marcar o local. No aplicativo, o GPS preenche automaticamente.</div>
+          </div>
+          <div class="field">
+            <label class="l" for="r-end">Endereço ou referência</label>
+            <input type="text" id="r-end" placeholder="Ex.: Rua Tiradentes, perto da Praça da Matriz">
+          </div>
+          <div class="field">
+            <label class="l" for="r-bairro">Bairro ou distrito</label>
+            <select id="r-bairro"></select>
+          </div>
+          <p class="err" id="r-err"></p>
+          <button class="btn pri wide" type="submit">Enviar pedido</button>
+        </div>
+      </form>
+    </div>
+    <div id="rep-ok" class="card success" hidden></div>
+  </section>
+
+  <!-- DECIDIR -->
+  <section class="view" id="v-decidir">
+    <h1>Decidir</h1>
+    <p class="sub">Uma vez por semestre, a população escolhe as prioridades dos investimentos maiores. A prefeitura publica o resultado e o que vai fazer com ele.</p>
+    <div class="dec-layout">
+      <div class="card pad" id="consulta"></div>
+      <div class="stack-col">
+        <div class="card pad">
+          <h2>Sugira uma proposta</h2>
+          <p class="muted small">As sugestões mais apoiadas podem entrar como opção na próxima consulta.</p>
+          <form id="sug-form" class="sug-form">
+            <input type="text" id="sug-txt" placeholder="Ex.: Iluminação na estrada para São Gonçalo" maxlength="90">
+            <button class="btn" type="submit">Enviar</button>
+          </form>
+          <ul class="sugs" id="sugs"></ul>
+        </div>
+        <div class="card pad" id="anterior"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARÊNCIA -->
+  <section class="view" id="v-transparencia">
+    <h1>Transparência</h1>
+    <p class="sub">Indicadores públicos da plataforma, atualizados a partir dos pedidos registrados.</p>
+    <div class="tiles" id="tiles"></div>
+    <div class="grid2">
+      <div class="card pad">
+        <h2>Pedidos por bairro e distrito</h2>
+        <div id="by-bairro"></div>
+      </div>
+      <div class="stack-col">
+        <div class="card pad">
+          <h2>Por onde a população participa</h2>
+          <div id="canal"></div>
+        </div>
+        <div class="card pad">
+          <h2>Próximos encontros presenciais</h2>
+          <p class="muted small">Um servidor registra pedidos e votos de quem não usa o aplicativo.</p>
+          <div id="encontros"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="js/dados.js"></script>
+<script src="js/mapa.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
